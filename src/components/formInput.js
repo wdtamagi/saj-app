@@ -38,7 +38,7 @@ const StyledLabel = styled.label`
 
   ${({ value }) =>
     value &&
-    value != '' &&
+    value !== '' &&
     `
     font-size: 75%;
     transform: translate3d(0, -100%, 0);
@@ -67,11 +67,18 @@ export default class FormInput extends React.Component {
   }
 
   render() {
-    let { className, inputLabel, value, onChange, id } = this.props
+    let {
+      className,
+      type = 'text',
+      inputLabel,
+      value,
+      onChange,
+      id,
+    } = this.props
     return (
       <StyledWrapper className={className}>
         <StyledInput
-          type="text"
+          type={type}
           id={id}
           value={value}
           onChange={onChange}
@@ -84,5 +91,3 @@ export default class FormInput extends React.Component {
     )
   }
 }
-// export default compose(
-// )(FormInput)
