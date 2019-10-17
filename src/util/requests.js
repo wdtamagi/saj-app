@@ -18,7 +18,7 @@ export const allResponsibles = async ({ nome, cpf, email, page }) => {
   return res
 }
 
-export const removeResponsible = async ({ id }) => {
+export const removeResponsible = async id => {
   let res = await axios.delete(
     `/responsaveis/${id}`,
     {},
@@ -29,7 +29,7 @@ export const removeResponsible = async ({ id }) => {
   return res
 }
 
-export const getResponsible = async ({ id }) => {
+export const getResponsible = async id => {
   let res = await axios.get(`/responsaveis/${id}`, {
     headers: headers,
   })
@@ -37,7 +37,7 @@ export const getResponsible = async ({ id }) => {
 }
 
 export const createResponsible = async data => {
-  let res = await axios.post(`/responsaveis`, data, {
+  let res = await axios.post(`/responsaveis/`, data, {
     headers: headers,
   })
   return res
