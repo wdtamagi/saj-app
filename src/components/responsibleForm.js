@@ -9,6 +9,8 @@ import {
 } from '../util/requests'
 
 import FormInput from '../components/formInput'
+import { MenuIcon } from '../util/icons'
+import DefaultButton from './defaultButton'
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -22,8 +24,29 @@ const StyledTitle = styled.h2`
   margin: 1rem;
 `
 
+const StyledMenuLink = styled(Link)`
+  float: right;
+  color: #302f2f;
+  margin: 1rem;
+
+  &:hover {
+    transition: all 150ms linear;
+    opacity: 0.75;
+  }
+
+  &:active {
+    transition: all 150ms linear;
+    opacity: 0.65;
+  }
+`
+
+const StyledMenuIcon = styled(MenuIcon)`
+  width: 2rem;
+`
+
 const StyledForm = styled.div`
   margin: 1rem;
+  padding-top: 1rem;
   background-color: #fff;
 `
 
@@ -41,7 +64,7 @@ const StyledError = styled.div`
   background-color: #fae3e3;
   font-family: 'Roboto', sans-serif;
   border: 1px solid #ed143d;
-  margin: 1rem;
+  margin: 0 1rem;
   padding: 1rem;
   min-width: 0px;
   min-height: 0px;
@@ -51,7 +74,7 @@ const StyledError = styled.div`
     content: '';
     position: absolute;
     top: -9px;
-    left: 24px;
+    left: 50px;
     width: 15px;
     height: 15px;
     background-color: #fae3e3;
@@ -61,6 +84,12 @@ const StyledError = styled.div`
   }
 `
 
+const StyledDefaultButton = styled(DefaultButton)`
+  display: inline-block;
+  margin: 1rem;
+`
+
+// ResponsibleForm Component
 const ResponsibleForm = () => {
   let { responsableId } = useParams()
   let history = useHistory()
@@ -133,7 +162,9 @@ const ResponsibleForm = () => {
   return (
     <StyledWrapper>
       <StyledTitle>Cadastro de responsável</StyledTitle>
-      <Link to="/responsible">return</Link>
+      <StyledMenuLink to="/responsible" title="Voltar a lista">
+        <StyledMenuIcon />
+      </StyledMenuLink>
       <StyledForm>
         <StyledFormGroup>
           <StyledFormInput
@@ -165,7 +196,9 @@ const ResponsibleForm = () => {
             pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
           />
         </StyledFormGroup>
-        <button onClick={submmitForm}>{id ? 'Editar' : 'Cadastrar'}</button>
+        <StyledDefaultButton onClick={submmitForm}>
+          {id ? 'Editar' : 'Cadastrar'}
+        </StyledDefaultButton>
       </StyledForm>
       {errors.length > 0 && (
         <StyledError>
