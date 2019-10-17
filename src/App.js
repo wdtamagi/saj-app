@@ -8,7 +8,8 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 
-import Responsibles from './pages/responsibles'
+import ResponsibleList from './components/responsibleList'
+import ResponsibleForm from './components/responsibleForm'
 
 const StyledMenuBar = styled.nav`
   display: flex;
@@ -61,17 +62,26 @@ const App = () => {
     <Router>
       <div>
         <StyledMenuBar>
-          <StyledLogo src="./logo.png" alt="" />
+          <StyledLogo src="http://localhost:3000/logo.png" alt="" />
           <StyledMenu>
             <StyledMenuItem>
-              <MenuLink to="/responsibles" label="Responsáveis" />
+              <MenuLink to="/responsible" label="Responsáveis" />
             </StyledMenuItem>
           </StyledMenu>
         </StyledMenuBar>
 
         <Switch>
-          <Route path="/responsibles">
-            <Responsibles />
+          <Route exact path="/responsible">
+            <ResponsibleList />
+          </Route>
+          <Route path="/responsible">
+            <Switch>
+              <Route
+                path={['/responsible/new', '/responsible/edit/:responsableId']}
+              >
+                <ResponsibleForm />
+              </Route>
+            </Switch>
           </Route>
           <Route path="/">
             <Home />
