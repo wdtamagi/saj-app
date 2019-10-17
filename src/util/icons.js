@@ -1,8 +1,64 @@
 import React from 'react'
 
-export const AddIcon = () => (
-  <svg height="1000" width="1000">
-    <glyph glyph-name="ui-add" unicode="&#xec3e;" horiz-adv-x="1000" />
-    <path d="M942.8 357.2h-300v-300.09999999999997c0-31.400000000000023-25.699999999999932-57.10000000000002-57.09999999999991-57.10000000000002h-171.40000000000003c-31.400000000000034 0-57.19999999999999 25.7-57.19999999999999 57.1v300.09999999999997h-300c-31.400000000000023 0-57.10000000000002 25.69999999999999-57.10000000000002 57.10000000000002v171.40000000000003c0 31.399999999999977 25.7 57.09999999999991 57.1 57.09999999999991h300v300.1c0 31.300000000000068 25.799999999999955 57.10000000000002 57.19999999999999 57.10000000000002h171.40000000000003c31.399999999999977 0 57.09999999999991-25.799999999999955 57.09999999999991-57.10000000000002v-300.1h300c31.5 0 57.200000000000045-25.699999999999932 57.200000000000045-57.09999999999991v-171.40000000000003c0-31.400000000000034-25.700000000000045-57.10000000000002-57.200000000000045-57.10000000000002z" />
+export const AddIcon = props => (
+  <svg
+    stroke="currentColor"
+    fill="none"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="12" y1="8" x2="12" y2="16"></line>
+    <line x1="8" y1="12" x2="16" y2="12"></line>
+  </svg>
+)
+
+export const EditIcon = props => (
+  <svg
+    stroke="currentColor"
+    fill="none"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+  </svg>
+)
+
+export const RemoveIcon = props => (
+  <svg
+    stroke="currentColor"
+    fill="none"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <polyline points="3 6 5 6 21 6"></polyline>
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+    <line x1="10" y1="11" x2="10" y2="17"></line>
+    <line x1="14" y1="11" x2="14" y2="17"></line>
+  </svg>
+)
+
+export const MenuIcon = props => (
+  <svg
+    stroke="currentColor"
+    fill="none"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
   </svg>
 )
