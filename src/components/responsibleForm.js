@@ -132,10 +132,17 @@ const ResponsibleForm = () => {
     }
   }, [history, responsableId])
 
-  const onChangeFormField = e => {
+  const onChangeFormField = ({ target: { id, value } }) => {
     setResponsible({
       ...responsible,
-      [e.target.id]: e.target.value,
+      [id]: value,
+    })
+  }
+
+  const onChangeCpf = ({ target: { value } }) => {
+    setResponsible({
+      ...responsible,
+      cpf: value.replace(/\D/g, ''),
     })
   }
 
@@ -201,7 +208,7 @@ const ResponsibleForm = () => {
           <StyledFormInput
             inputLabel="CPF"
             value={cpf}
-            onChange={onChangeFormField}
+            onChange={onChangeCpf}
             id="cpf"
             mask="999.999.999-99"
           />
@@ -213,7 +220,7 @@ const ResponsibleForm = () => {
             type="date"
           />
         </StyledFormGroup>
-        <StyledDefaultButton onClick={submmitForm}>
+        <StyledDefaultButton id="ResponibleFormButton" onClick={submmitForm}>
           {id ? 'Editar' : 'Cadastrar'}
         </StyledDefaultButton>
       </StyledForm>
