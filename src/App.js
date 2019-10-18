@@ -79,6 +79,28 @@ const MenuLink = ({ label, to, exact }) => {
   )
 }
 
+export const Routes = () => {
+  return (
+    <Switch>
+      <Route exact path="/responsible">
+        <ResponsibleList />
+      </Route>
+      <Route path="/responsible">
+        <Switch>
+          <Route
+            path={['/responsible/new', '/responsible/edit/:responsableId']}
+          >
+            <ResponsibleForm />
+          </Route>
+        </Switch>
+      </Route>
+      <Route path="/">
+        <Home />
+      </Route>
+    </Switch>
+  )
+}
+
 const App = () => {
   return (
     <Router>
@@ -93,26 +115,7 @@ const App = () => {
             </StyledMenu>
           </StyledMenuBar>
 
-          <Switch>
-            <Route exact path="/responsible">
-              <ResponsibleList />
-            </Route>
-            <Route path="/responsible">
-              <Switch>
-                <Route
-                  path={[
-                    '/responsible/new',
-                    '/responsible/edit/:responsableId',
-                  ]}
-                >
-                  <ResponsibleForm />
-                </Route>
-              </Switch>
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
+          <Routes />
         </div>
       </ThemeProvider>
     </Router>
