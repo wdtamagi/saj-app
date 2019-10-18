@@ -95,7 +95,6 @@ const FormInput = ({
       {mask && (
         <StyledInputMask
           mask={mask}
-          guide={false}
           id={id}
           value={value}
           onChange={onChange}
