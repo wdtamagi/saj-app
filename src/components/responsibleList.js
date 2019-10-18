@@ -137,7 +137,7 @@ const StyledRemoveLink = styled.a`
 
   &:hover {
     transition: all 150ms linear;
-    color: #ff6161;
+    color: ${({ theme: { danger } }) => danger};
   }
 
   &:active {
@@ -184,6 +184,79 @@ const StyledPaginationButton = styled.div`
 
   ${({ selected, theme: { primary } }) =>
     selected && `background-color: ${primary}; color: #fff;`};
+`
+
+const StyledDialogOverlay = styled.div`
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(137, 137, 137, 0.6);
+`
+
+const StyledDialog = styled.div`
+  display: grid;
+  width: 350px;
+  height: 160px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px #6a6a6a;
+  font-family: 'Roboto', sans-serif;
+`
+
+const StyledDialogTitle = styled.div`
+  text-align: justify;
+  font-size: 1.2rem;
+  margin: 1rem 1rem 0 1rem;
+  color: ${({ theme: { fakeBlack } }) => fakeBlack};
+`
+
+const StyledDialogText = styled.div`
+  text-align: justify;
+  margin: 0 1rem;
+  color: #8d8b8b;
+`
+
+const StyledDialogAction = styled.div`
+  justify-self: flex-end;
+  margin: 0 1rem;
+`
+
+const StyledDialogActionCancel = styled.a`
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 1rem;
+  color: ${({ theme: { fakeBlack } }) => fakeBlack};
+
+  &:hover {
+    transition: all 150ms linear;
+    opacity: 0.85;
+  }
+
+  &:active {
+    transition: all 150ms linear;
+    opacity: 0.75;
+  }
+`
+
+const StyledDialogActionRemove = styled.a`
+  text-decoration: none;
+  cursor: pointer;
+  color: ${({ theme: { danger } }) => danger};
+
+  &:hover {
+    transition: all 150ms linear;
+    color: #ff3a3a;
+  }
+
+  &:active {
+    transition: all 150ms linear;
+    opacity: 0.75;
+  }
 `
 
 // ResponsibleList Component
@@ -238,6 +311,21 @@ const ResponsibleList = () => {
     callAllResponsibles()
   }, [filtered, getPageArray, page])
 
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
+  const [confirmId, setConfirmId] = useState(null)
+  const openConfirmDialogHandler = id => {
+    setConfirmId(id)
+    setOpenConfirmDialog(true)
+  }
+  const closeConfirmDialogHandler = () => setOpenConfirmDialog(false)
+  const removeResponsibleHandler = async () => {
+    const { status } = await removeResponsible(confirmId)
+    if (status === 200) {
+      await updateResponsibles()
+    }
+    setOpenConfirmDialog(false)
+  }
+
   const onChangeFilterField = e => {
     setFilter({ ...filter, [e.target.id]: e.target.value })
   }
@@ -245,13 +333,6 @@ const ResponsibleList = () => {
   const submmitFilter = () => {
     setPage(0)
     setFiltered(filter)
-  }
-
-  const removeResponsibleHandler = async id => {
-    const { status } = await removeResponsible(id)
-    if (status === 200) {
-      updateResponsibles()
-    }
   }
 
   const updateResponsibles = async () => {
@@ -342,7 +423,7 @@ const ResponsibleList = () => {
                     <StyledEditIcon />
                   </StyledEditLink>
                   <StyledRemoveLink
-                    onClick={() => removeResponsibleHandler(id)}
+                    onClick={() => openConfirmDialogHandler(id)}
                     title="Remover"
                   >
                     <StyledRemoveIcon />
@@ -385,6 +466,26 @@ const ResponsibleList = () => {
           </StyledPagination>
         )}
       </StyledListWrapper>
+
+      {openConfirmDialog && (
+        <StyledDialogOverlay onClick={closeConfirmDialogHandler}>
+          <StyledDialog>
+            <StyledDialogTitle>Deseja remover o registro?</StyledDialogTitle>
+            <StyledDialogText>
+              Ao confirmar a remoção do registro o mesmo será excluido
+              permanentemente.
+            </StyledDialogText>
+            <StyledDialogAction>
+              <StyledDialogActionCancel onClick={closeConfirmDialogHandler}>
+                CANCELAR
+              </StyledDialogActionCancel>
+              <StyledDialogActionRemove onClick={removeResponsibleHandler}>
+                REMOVER
+              </StyledDialogActionRemove>
+            </StyledDialogAction>
+          </StyledDialog>
+        </StyledDialogOverlay>
+      )}
     </StyledWrapper>
   )
 }
