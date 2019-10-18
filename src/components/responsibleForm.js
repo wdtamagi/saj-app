@@ -15,7 +15,6 @@ import DefaultButton from './defaultButton'
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #f8f8f8;
 `
 
 const StyledTitle = styled.h2`
@@ -48,6 +47,8 @@ const StyledForm = styled.div`
   margin: 1rem;
   padding-top: 1rem;
   background-color: #fff;
+  box-shadow: 2px 2px 2px #d0d0d0;
+  border-radius: 3px;
 `
 
 const StyledFormGroup = styled.div`
@@ -69,6 +70,8 @@ const StyledError = styled.div`
   min-width: 0px;
   min-height: 0px;
   transition: all 500ms;
+  box-shadow: 2px 2px 2px #d0d0d0;
+  border-radius: 3px;
 
   &::before {
     content: '';
@@ -114,6 +117,9 @@ const ResponsibleForm = () => {
           if (data) {
             if (!data.data_nascimento) {
               delete data.data_nascimento
+            } else {
+              const [year, month, day] = data.data_nascimento
+              data.data_nascimento = new Date(year, month, day)
             }
             setResponsible(data)
           } else {
@@ -126,7 +132,17 @@ const ResponsibleForm = () => {
   }, [history, responsableId])
 
   const onChangeFormField = e => {
-    setResponsible({ ...responsible, [e.target.id]: e.target.value })
+    setResponsible({
+      ...responsible,
+      [e.target.id]: e.target.value,
+    })
+  }
+
+  const onChangeBornDate = e => {
+    setResponsible({
+      ...responsible,
+      data_nascimento: e,
+    })
   }
 
   const submmitForm = async () => {
@@ -186,14 +202,14 @@ const ResponsibleForm = () => {
             value={cpf}
             onChange={onChangeFormField}
             id="cpf"
+            mask="999.999.999-99"
           />
           <StyledFormInput
             inputLabel="Data de nascimento"
             value={data_nascimento}
-            onChange={onChangeFormField}
+            onChange={onChangeBornDate}
             id="data_nascimento"
             type="date"
-            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
           />
         </StyledFormGroup>
         <StyledDefaultButton onClick={submmitForm}>
