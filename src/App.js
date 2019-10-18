@@ -17,6 +17,7 @@ const theme = {
   lightestPrimary: '#797cc2',
   fakeBlack: '#302f2f',
   fakeWhite: '#f5f2f2',
+  danger: '#ff6161',
 }
 
 const StyledMenuBar = styled.nav`
