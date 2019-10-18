@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const StyledButton = styled.div`
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
-  background-color: #1fc5f0;
+  background-color: ${({ theme: { primary } }) => primary};
   color: #fff;
   padding: 0.8rem;
   border-radius: 3px;

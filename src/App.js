@@ -6,18 +6,27 @@ import {
   Link,
   useRouteMatch,
 } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 
 import ResponsibleList from './components/responsibleList'
 import ResponsibleForm from './components/responsibleForm'
 
+const theme = {
+  primary: '#2128bd',
+  lightPrimary: '#494fc2',
+  lightestPrimary: '#797cc2',
+  fakeBlack: '#302f2f',
+  fakeWhite: '#f5f2f2',
+}
+
 const StyledMenuBar = styled.nav`
   display: flex;
-  background-color: #07bcdf;
+  background-color: #f5f2f2;
 `
 
 const StyledLogo = styled.img`
-  margin: 0 1rem;
+  height: 50px;
+  margin: auto 1rem;
 `
 
 const StyledMenu = styled.ul`
@@ -35,12 +44,16 @@ const StyledMenuItem = styled.li`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  font-size: 1.5rem;
   font-weight: 500;
-  color: ${({ active }) => (active ? '#fff' : '#2e2e2e')};
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  color: #2128bd;
+  border-radius: 4px;
 
+  ${({ active }) => (active ? 'border: 2px solid #2128bd;' : '')}
   &:hover {
     color: #fff;
+    background-color: #2128bd;
   }
 `
 
@@ -60,34 +73,39 @@ const MenuLink = ({ label, to, exact }) => {
 const App = () => {
   return (
     <Router>
-      <div>
-        <StyledMenuBar>
-          <StyledLogo src="http://localhost:3000/logo.png" alt="" />
-          <StyledMenu>
-            <StyledMenuItem>
-              <MenuLink to="/responsible" label="Responsáveis" />
-            </StyledMenuItem>
-          </StyledMenu>
-        </StyledMenuBar>
+      <ThemeProvider theme={theme}>
+        <div>
+          <StyledMenuBar>
+            <StyledLogo src="http://localhost:3000/logo.png" alt="" />
+            <StyledMenu>
+              <StyledMenuItem>
+                <MenuLink to="/responsible" label="Responsáveis" />
+              </StyledMenuItem>
+            </StyledMenu>
+          </StyledMenuBar>
 
-        <Switch>
-          <Route exact path="/responsible">
-            <ResponsibleList />
-          </Route>
-          <Route path="/responsible">
-            <Switch>
-              <Route
-                path={['/responsible/new', '/responsible/edit/:responsableId']}
-              >
-                <ResponsibleForm />
-              </Route>
-            </Switch>
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
+          <Switch>
+            <Route exact path="/responsible">
+              <ResponsibleList />
+            </Route>
+            <Route path="/responsible">
+              <Switch>
+                <Route
+                  path={[
+                    '/responsible/new',
+                    '/responsible/edit/:responsableId',
+                  ]}
+                >
+                  <ResponsibleForm />
+                </Route>
+              </Switch>
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </div>
+      </ThemeProvider>
     </Router>
   )
 }

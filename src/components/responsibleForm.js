@@ -21,11 +21,12 @@ const StyledTitle = styled.h2`
   display: inline-block;
   font-family: 'Roboto', sans-serif;
   margin: 1rem;
+  color: ${({ theme: { fakeBlack } }) => fakeBlack};
 `
 
 const StyledMenuLink = styled(Link)`
   float: right;
-  color: #302f2f;
+  color: ${({ theme: { primary } }) => primary};
   margin: 1rem;
 
   &:hover {

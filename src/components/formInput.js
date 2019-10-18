@@ -6,72 +6,44 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './formInput.css'
 
-const StyledInput = styled.input`
+const inputStyle = `
   display: block;
   background: transparent;
   outline: none;
   width: 100%;
   border: none;
   border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-bottom-color: #585858;
+  border-bottom-style: solid;  
   transition: 300ms all;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
-  font-size: 100%;
+  font-size: 100%;  
+`
+
+const StyledInput = styled.input`
+  ${inputStyle}
+  border-bottom-color: ${({ theme: { fakeBlack } }) => fakeBlack};
 
   &:focus {
-    border-bottom-color: #0187ff;
-  }
-
-  &:focus + ${() => StyledLabel} {
-    color: #0187ff;
-    font-size: 75%;
-    transform: translate3d(0, -100%, 0);
+    border-bottom-color: ${({ theme: { primary } }) => primary};
   }
 `
 
 const StyledInputMask = styled(InputMask)`
-  display: block;
-  background: transparent;
-  outline: none;
-  width: 100%;
-  border: none;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-bottom-color: #585858;
-  transition: 300ms all;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  font-size: 100%;
+  ${inputStyle}
+  border-bottom-color: ${({ theme: { fakeBlack } }) => fakeBlack};
 
   &:focus {
-    border-bottom-color: #0187ff;
+    border-bottom-color: ${({ theme: { primary } }) => primary};
   }
 `
 
 const StyledDatePicker = styled(DatePicker)`
-  display: block;
-  background: transparent;
-  outline: none;
-  width: 100%;
-  border: none;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-bottom-color: #585858;
-  transition: 300ms all;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  font-size: 100%;
+  ${inputStyle}
+  border-bottom-color: ${({ theme: { fakeBlack } }) => fakeBlack};
 
   &:focus {
-    border-bottom-color: #0187ff;
-  }
-
-  &:focus + ${({ id }) => `#label_${id}`} {
-    color: #0187ff;
-    font-size: 75%;
-    transform: translate3d(0, -100%, 0);
+    border-bottom-color: ${({ theme: { primary } }) => primary};
   }
 `
 
@@ -79,7 +51,7 @@ const StyledLabel = styled.label`
   position: absolute;
   top: 0;
   display: block;
-  color: #585858;
+  color: ${({ theme: { fakeBlack } }) => fakeBlack};
   transition: 300ms all;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
@@ -94,11 +66,13 @@ const StyledLabel = styled.label`
     transform: translate3d(0, -100%, 0);
   `}
 
-  ${({ focused }) =>
+  ${({ focused, theme: { primary } }) =>
     focused &&
-    `    color: #0187ff;
-    font-size: 75%;
-    transform: translate3d(0, -100%, 0);`}
+    `
+      color: ${primary};
+      font-size: 75%;
+      transform: translate3d(0, -100%, 0);
+    `}
 `
 
 const StyledWrapper = styled.div`

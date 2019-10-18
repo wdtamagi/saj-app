@@ -16,11 +16,12 @@ const StyledTitle = styled.h2`
   display: inline-block;
   font-family: 'Roboto', sans-serif;
   margin: 1rem;
+  color: ${({ theme: { fakeBlack } }) => fakeBlack};
 `
 
 const StyledAddLink = styled(Link)`
   float: right;
-  color: #302f2f;
+  color: ${({ theme: { primary } }) => primary};
   margin: 1rem;
 
   &:hover {
@@ -68,6 +69,7 @@ const StyledSplit = styled.div`
 const StyledListWrapper = styled.div`
   font-family: 'Roboto', sans-serif;
   margin: 1rem;
+  color: ${({ theme: { fakeBlack } }) => fakeBlack};
 `
 
 const StyledNoRecords = styled.p`
@@ -112,11 +114,11 @@ const StyledListItemActionWrapper = styled.div`
 
 const StyledEditLink = styled(Link)`
   margin: 0 0.5rem;
-  color: #302f2f;
+  color: ${({ theme: { fakeBlack } }) => fakeBlack};
 
   &:hover {
     transition: all 150ms linear;
-    color: #00b7ff;
+    color: #000bff;
   }
 
   &:active {
@@ -131,7 +133,7 @@ const StyledEditIcon = styled(EditIcon)`
 const StyledRemoveLink = styled.a`
   margin: 0 0.5rem;
   cursor: pointer;
-  color: #302f2f;
+  color: ${({ theme: { fakeBlack } }) => fakeBlack};
 
   &:hover {
     transition: all 150ms linear;
@@ -156,9 +158,9 @@ const StyledPaginationButton = styled.div`
   align-items: center;
   justify-content: center;
   font-family: 'Roboto', sans-serif;
-  background-color: #fefefe;
-  color: #302f2f;
-  border: 1px solid #949292;
+  background-color: #fff;
+  color: ${({ theme: { fakeBlack } }) => fakeBlack};
+  border: 1px solid ${({ theme: { fakeBlack } }) => fakeBlack};
   border-radius: 3px;
   width: 1rem;
   height: 1rem;
@@ -171,16 +173,17 @@ const StyledPaginationButton = styled.div`
   &:hover {
     transition: all 150ms linear;
     color: #fff;
-    background-color: #a3e2fb;
+    background-color: ${({ theme: { lightPrimary } }) => lightPrimary};
   }
 
   &:active {
     transition: all 150ms linear;
     color: #fff;
-    background-color: #53ceff;
+    background-color: ${({ theme: { lightestPrimary } }) => lightestPrimary};
   }
 
-  ${({ selected }) => selected && 'background-color: #1fc5f0; color: #fff;'};
+  ${({ selected, theme: { primary } }) =>
+    selected && `background-color: ${primary}; color: #fff;`};
 `
 
 // ResponsibleList Component
@@ -303,37 +306,51 @@ const ResponsibleList = () => {
           </StyledNoRecords>
         )}
         {responsibles.length > 0 &&
-          responsibles.map(({ id, nome, email, cpf, data_nascimento }) => (
-            <StyledListItemWrapper key={`responsible_${id}`}>
-              <StyledListItemGroup>
-                <StyledListItemFieldWrapper>
-                  <StyledListItemField style={{ fontWeight: 700 }}>
-                    {nome}
-                  </StyledListItemField>
-                  <StyledListItemFieldSplit>-</StyledListItemFieldSplit>
-                  <StyledListItemField>{email}</StyledListItemField>
-                </StyledListItemFieldWrapper>
-                <StyledListItemFieldWrapper>
-                  <StyledListItemField>{cpf}</StyledListItemField>
-                  {data_nascimento && (
+          responsibles.map(({ id, nome, email, cpf, data_nascimento }) => {
+            const [year = 0, month = 0, day = 0] = data_nascimento || []
+
+            const expCpf = cpf.match(/(\d{3})(\d{3})(\d{3})(\d{2})/)
+            const maskedCpf = `${expCpf[1]}.${expCpf[2]}.${expCpf[3]}-${
+              expCpf[4]
+            }`
+
+            return (
+              <StyledListItemWrapper key={`responsible_${id}`}>
+                <StyledListItemGroup>
+                  <StyledListItemFieldWrapper>
+                    <StyledListItemField style={{ fontWeight: 700 }}>
+                      {nome}
+                    </StyledListItemField>
                     <StyledListItemFieldSplit>-</StyledListItemFieldSplit>
-                  )}
-                  <StyledListItemField>{data_nascimento}</StyledListItemField>
-                </StyledListItemFieldWrapper>
-              </StyledListItemGroup>
-              <StyledListItemActionWrapper>
-                <StyledEditLink to={`/responsible/edit/${id}`} title="Editar">
-                  <StyledEditIcon />
-                </StyledEditLink>
-                <StyledRemoveLink
-                  onClick={() => removeResponsibleHandler(id)}
-                  title="Remover"
-                >
-                  <StyledRemoveIcon />
-                </StyledRemoveLink>
-              </StyledListItemActionWrapper>
-            </StyledListItemWrapper>
-          ))}
+                    <StyledListItemField>{email}</StyledListItemField>
+                  </StyledListItemFieldWrapper>
+                  <StyledListItemFieldWrapper>
+                    <StyledListItemField>{maskedCpf}</StyledListItemField>
+                    {data_nascimento && (
+                      <StyledListItemFieldSplit>-</StyledListItemFieldSplit>
+                    )}
+                    {data_nascimento && (
+                      <StyledListItemField>
+                        {`${day}`.replace(/^(\d)$/, '0$1')}/
+                        {`${month}`.replace(/^(\d)$/, '0$1')}/{year}
+                      </StyledListItemField>
+                    )}
+                  </StyledListItemFieldWrapper>
+                </StyledListItemGroup>
+                <StyledListItemActionWrapper>
+                  <StyledEditLink to={`/responsible/edit/${id}`} title="Editar">
+                    <StyledEditIcon />
+                  </StyledEditLink>
+                  <StyledRemoveLink
+                    onClick={() => removeResponsibleHandler(id)}
+                    title="Remover"
+                  >
+                    <StyledRemoveIcon />
+                  </StyledRemoveLink>
+                </StyledListItemActionWrapper>
+              </StyledListItemWrapper>
+            )
+          })}
         {pageArr.length > 1 && (
           <StyledPagination>
             <StyledPaginationButton onClick={() => setPage(0)}>
