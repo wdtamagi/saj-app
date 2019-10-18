@@ -58,6 +58,14 @@ const StyledLink = styled(Link)`
   }
 `
 
+const StyledHomeTitle = styled.h2`
+  font-family: 'Roboto', sans-serif;
+  font-size: 4rem;
+  text-align: center;
+  margin: 3rem 0;
+  color: ${({ theme: { primary } }) => primary};
+`
+
 const MenuLink = ({ label, to, exact }) => {
   let match = useRouteMatch({
     path: to,
@@ -112,7 +120,7 @@ const App = () => {
 }
 
 function Home() {
-  return <h2>SAJ App</h2>
+  return <StyledHomeTitle>SAJ App</StyledHomeTitle>
 }
 
 export default App
