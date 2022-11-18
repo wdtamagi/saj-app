@@ -10,7 +10,7 @@
     "react-dom": "^16.10.2",
     "react-input-mask": "^3.0.0-alpha.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
+    "react-scripts": "3.4.4",
     "styled-components": "^4.4.0",
     "typescript": "^3.6.4"
   },
